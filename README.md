@@ -13,7 +13,7 @@ The whole project is coded with R. We use the  [rvest](https://rvest.tidyverse.o
 
 My initial idea is to use Wikipedia to get the genre for every song. The Wikipedia page for a song, eg. *We are never ever getting back together* by Taylor Swift, has a table with song attributes. You can see that there is a row **Genre** from which to extract the information. 
 
-<img src="C:\Users\Miguel\Documents\GitHub\los40principales\screenshot.png" alt="Wikipedia table for the song *We are never ever getting back together*" style="zoom:60%;" />
+<img src="screenshot.png" alt="Wikipedia table for the song *We are never ever getting back together*" style="zoom:60%;" />
 
 Since there is no way to tell which genre is more representative for the song  (I don't believe the order in which they appear is determinant), I will use all of them. All genres will be written in the same cell as a string eg. *'Bubblegum pop, dance-pop, pop rock, electropop'* and afterwards when reading the genres in the analysis phase, we will split the string by commas.
 
