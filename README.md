@@ -17,6 +17,12 @@ My initial idea is to use Wikipedia to get the genre for every song. The Wikiped
 
 Since there is no way to tell which genre is more representative for the song  (I don't believe the order in which they appear is determinant), I will use all of them. All genres will be written in the same cell as a string eg. *'Bubblegum pop, dance-pop, pop rock, electropop'* and afterwards when reading the genres in the analysis phase, we will split the string by commas.
 
+### Wikipedia search
+
+Take for example the song *Sopa fría* ("Cold soup" in English) by M-Clan. There is a page for the term [Sopa fría](https://es.wikipedia.org/wiki/Sopa_fr%C3%ADa) in the Spanish Wikipedia but as you can see it does not correspond to the song but the meal. Besides, there are some songs which share title with the album. That's why we'll have to run some conditionals using .
+
+Instead of dealing with the search form, I chose to work directly with URLs. I must confess that it was also because I could not figure out how to get the page of the results once I submitted the form.
+
 ## Plotting
 
 Expect to see animated plots using the [gganimate](https://gganimate.com/) package as well as [Plotly](https://plotly.com/r/). 
