@@ -1,4 +1,6 @@
 library(rvest)
+library(progress)
+
 playlists <- read.csv('playlists.csv')[-1]
 n <- dim(playlists)[1]
 
@@ -11,9 +13,37 @@ search_url <- function(song){
 
 for(i in 1:n){
   song <- playlists$Song[i]
-  results <- html_nodes(read_html(search_url(song)), '.mw-search-results')
-  
-  if (regexpr('canción', ) != -1) {
-    
-  } else if ((regexpr('álbum', s) != -1))
+  wiki <- html_session(search_url(song))
+  results <- html_nodes(read_html(wiki), '.mw-search-result-heading')
+  song_page <- tryCatch(
+                        follow_link(wiki,'canción'),
+                        error = function(e){
+                          tryCatch(
+                            follow_link(wiki,'álbum'),
+                            error = function(e){
+                              tryCatch(
+                              follow_link(wiki,song),
+                              error = function(e){
+                                tryCatch(
+                                  NULL
+                                )}
+                              )}
+                          )}
+                        )
+  genres <- 'unknown'
+  if (!is.null(song_page)){
+    infobox <- html_node(read_html(song_page), '.infobox')
+    if (length(infobox)>0){
+      rows <- html_children(html_children(infobox)[[1]])
+      index <- grep('Género',rows)
+      if (length(index)>0){
+        genres <- html_text(html_children(rows[[index]])[[2]])
+        genres <- gsub('^\n', '',genres)
+        genres <- gsub('\n', ', ', genres)
+      }
+    }
+  }
+  playlists[i,]$Genre <- genres
 }
+
+
