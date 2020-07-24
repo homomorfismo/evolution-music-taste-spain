@@ -11,17 +11,12 @@ The whole project is coded with R. We use the  [rvest](https://rvest.tidyverse.o
 
 ## Classification
 
-My initial idea is to use Wikipedia to get the genre for every song. The Wikipedia page for a song, eg. *We are never ever getting back together* by Taylor Swift, has a table with song attributes. You can see that there is a row **Genre** from which to extract the information. 
+I use the [Discogs](www.discogs.com) database and instead of scraping the page I use the [API](https://www.discogs.com/developers/) (among other things, because I tried scraping but server complaint of too many requests). For this we use Python because there is [Python client library](https://github.com/discogs/discogs_client) (which is now deprecated, nonetheless is the one I used). 
 
-<img src="screenshot.png" alt="Wikipedia table for the song *We are never ever getting back together*" style="zoom:60%;" />
+### Known issues
 
-Since there is no way to tell which genre is more representative for the song  (I don't believe the order in which they appear is determinant), I will use all of them. All genres will be written in the same cell as a string eg. *'Bubblegum pop, dance-pop, pop rock, electropop'* and afterwards when reading the genres in the analysis phase, we will split the string by commas.
-
-### Wikipedia search
-
-Take for example the song *Sopa fría* ("Cold soup" in English) by M-Clan. There is a page for the term [Sopa fría](https://es.wikipedia.org/wiki/Sopa_fr%C3%ADa) in the Spanish Wikipedia but as you can see it does not correspond to the song but the meal. Besides, there are some songs which share title with the album. That's why we'll have to run some conditionals using .
-
-Instead of dealing with the search form, I chose to work directly with URLs. I must confess that it was also because I could not figure out how to get the page of the results once I submitted the form.
+* The program sometimes halts during execution flagging an error  like `raise ConnectionError(err, request=request)
+  requests.exceptions.ConnectionError: ('Connection aborted.', OSError(0, 'Error')) `. Fortunately, since the loop is not executed inside a function all variables are global variables and one can look up the value for `i`, which is the loop variable, and start the loop from `i = 347` for example. I will try to automate the process so that no manual restart is needed.
 
 ## Plotting
 

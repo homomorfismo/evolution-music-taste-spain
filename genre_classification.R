@@ -1,54 +1,34 @@
 library(rvest)
 library(progress)
+library(stringi)
 
 playlists <- read.csv('playlists.csv')[-1]
-unique_songs <- unique(playlists[c('Song', 'Artist')])$Song
-n <- length(unique_songs)
+playlists$Genre <- 'unknown'
+unique_songs <- unique(playlists[c('Song', 'Artist')])
+n <- dim(unique_songs)[1]
 
-search_url <- function(song){
-  first <- 'https://es.wikipedia.org/w/index.php?sort=relevance&search='
-  last <-'&title=Especial:Buscar&profile=advanced&fulltext=1&advancedSearch-current=%7B%7D&ns100=1&ns104=1&ns0=1'
-  s <- URLencode(song)
+search_url <- function(song,artist){
+  first <- 'https://www.discogs.com/search/?q='
+  last<- '&type=all'
+  s <- paste(song,artist)
+  s <- URLencode(stri_unescape_unicode(s))
   return(paste(first,s,last,sep=''))
 }
 
-for(i in 1:n){
-  song <- unique_songs[i]
-  wiki <- html_session(search_url(song))
-  results <- html_nodes(read_html(wiki), '.mw-search-result-heading')
-  
-  # find the Wikipedia page for the song (if possible)
-  song_page <- tryCatch(
-                        follow_link(wiki,'canción'),
-                        error = function(e){
-                          tryCatch(
-                            follow_link(wiki,'álbum'),
-                            error = function(e){
-                              tryCatch(
-                              follow_link(wiki,song),
-                              error = function(e){
-                                tryCatch(
-                                  NULL
-                                )}
-                              )}
-                          )}
-                        )
-  
-  # get the genre (if possible)
-  genres <- 'unknown'
-  if (!is.null(song_page)){
-    infobox <- html_node(read_html(song_page), '.infobox')
-    if (length(infobox)>0){
-      rows <- html_children(html_children(infobox)[[1]])
-      index <- grep('Género',rows)
-      if (length(index)>0){
-        genres <- html_text(html_children(rows[[index]])[[2]])
-        genres <- gsub('^\n', '',genres)
-        genres <- gsub('\n', ', ', genres)
-      }
-    }
-  }
-  
+pb <- progress_bar$new(total = n)
+for(i in 30:n){
+  song <- unique_songs[i,]$Song
+  artist <- unique_songs[i,]$Artist
+  wiki <- html_session(search_url(song, artist))
+  results <- html_nodes(read_html(wiki), '#search_results')
+  link <- html_attr(html_node(results, xpath = '/html/body/div[1]/div[4]/div[3]/div[3]/div[2]/div[1]/h4/a'), 'href')
+  full_link <- paste('https://www.discogs.com/',link,sep = '')
+  song_page <- jump_to(wiki, full_link)
+  details <- html_nodes(read_html(song_page), '.head')
+  index <- grep('Genre',details)
+  genres <- html_nodes(read_html(song_page), '.content')[[index]]
+  genres <- gsub('\n\\s*','',html_text(genres))
   # assign genre to all appearances of the song in the dataframe
   playlists[playlists$Song == song,]$Genre <- genres
+  pb$tick()
 }
