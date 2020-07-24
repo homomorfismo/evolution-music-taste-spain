@@ -2,7 +2,8 @@ library(rvest)
 library(progress)
 
 playlists <- read.csv('playlists.csv')[-1]
-n <- dim(playlists)[1]
+unique_songs <- unique(playlists[c('Song', 'Artist')])$Song
+n <- length(unique_songs)
 
 search_url <- function(song){
   first <- 'https://es.wikipedia.org/w/index.php?sort=relevance&search='
@@ -12,9 +13,11 @@ search_url <- function(song){
 }
 
 for(i in 1:n){
-  song <- playlists$Song[i]
+  song <- unique_songs[i]
   wiki <- html_session(search_url(song))
   results <- html_nodes(read_html(wiki), '.mw-search-result-heading')
+  
+  # find the Wikipedia page for the song (if possible)
   song_page <- tryCatch(
                         follow_link(wiki,'canción'),
                         error = function(e){
@@ -30,6 +33,8 @@ for(i in 1:n){
                               )}
                           )}
                         )
+  
+  # get the genre (if possible)
   genres <- 'unknown'
   if (!is.null(song_page)){
     infobox <- html_node(read_html(song_page), '.infobox')
@@ -43,7 +48,7 @@ for(i in 1:n){
       }
     }
   }
-  playlists[i,]$Genre <- genres
+  
+  # assign genre to all appearances of the song in the dataframe
+  playlists[playlists$Song == song,]$Genre <- genres
 }
-
-
