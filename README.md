@@ -3,7 +3,7 @@ Using the top 40 list elaborated by the Spanish music radio *Los 40 Principales*
 
 ## Scraping
 
-The whole project is coded with R. We use the  [rvest](https://rvest.tidyverse.org/) package for scrapping., to obtain the data from the [webpage](https://los40.com/lista40/2005/1) where the playlist is.  The scraper for the gets every top 40 playlist since 2005 (first year on record).
+We use the  [rvest](https://rvest.tidyverse.org/) R package to scrape data from the [webpage](https://los40.com/lista40/2005/1), where the playlists are.  The scraper for the gets every top 40 playlist since 2005 (first year on record). We wanted to use R as much as possible to practise, and we only coded in Python when there was no other choice.
 
 ### Known issues
 
