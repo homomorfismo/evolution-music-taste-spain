@@ -1,5 +1,5 @@
 # Evolution of music taste in Spain
-Using the top 40 list elaborated by the Spanish music radio *Los 40 Principales* we attempt to study the evolution of musical taste in Spain in terms of genre. [Similar projects](https://thedataface.com/2016/09/culture/genre-lifecycles) can be found on the web, mine is just a national version. We expect to see a swift towards *reggaetón* in the decade of 2010s.
+Using the top 40 list elaborated by the Spanish music radio *Los 40 Principales* we attempt to study the evolution of musical taste in Spain in terms of genre. [Similar projects](https://thedataface.com/2016/09/culture/genre-lifecycles) can be found on the web, mine is just a national version. We expect to see a shift towards *reggaeton* in the decade of 2010s.
 
 ## Scraping
 
