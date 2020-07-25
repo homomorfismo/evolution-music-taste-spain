@@ -1,9 +1,9 @@
 # Evolution of music taste in Spain
-Using the top 40 list elaborated by the Spanish music radio *Los 40 Principales* we attempt to study the evolution of musical taste in Spain in terms of genre. [Similar projects](https://thedataface.com/2016/09/culture/genre-lifecycles) can be found on the web, mine is just a national version. We expect to see a shift towards *reggaeton* in the decade of 2010s.
+Using the top 40 list elaborated by the Spanish music radio *Los 40 Principales* we attempt to study the evolution of musical taste in Spain in terms of genre. [Similar projects](https://thedataface.com/2016/09/culture/genre-lifecycles) can be found on the web, mine is just a national version. We expect to see a shift towards *reggaeton* in the latest year of the decade of 2010s.
 
 ## Scraping
 
-We use the  [rvest](https://rvest.tidyverse.org/) R package to scrape data from the [webpage](https://los40.com/lista40/2005/1), where the playlists are.  The scraper for the gets every top 40 playlist since 2005 (first year on record). We wanted to use R as much as possible to practise, and we only coded in Python when there was no other choice.
+We use the  [rvest](https://rvest.tidyverse.org/) R package to scrape data from the [webpage](https://los40.com/lista40/2005/1), where the playlists are.  The scraper gets every top 40 playlist since 2005 (first year on record). We wanted to use R as much as possible to practise, and we only coded in Python when there was no other choice.
 
 ### Known issues
 
@@ -11,7 +11,9 @@ We use the  [rvest](https://rvest.tidyverse.org/) R package to scrape data from 
 
 ## Classification
 
-We use the [Discogs](www.discogs.com) database and instead of scraping the page we use the [API](https://www.discogs.com/developers/) (among other things, because we tried scraping but server complaint of too many requests). For this we use Python because there is [Python client library](https://github.com/discogs/discogs_client) (which is now deprecated, nonetheless is the one we used).  Multiple genres are assigned to the same song so later we will need a way to consider them separately. Not all songs are assigned a genre successfully, but the number of songs which are left unclassified is small and the dataset could be completed by hand.
+We use the [Discogs](www.discogs.com) database and, instead of scraping the page, we use the [API](https://www.discogs.com/developers/) (among other things, because we tried scraping but server complaint of too many requests). We use Python for this part, because there is a [Python client library](https://github.com/discogs/discogs_client) much easier to use for people who don't have much clue about how API requests work. 
+
+Multiple genres are assigned to the same song so later we will need a way to consider them separately. Not all songs are assigned a genre successfully, but the number of songs which are left unclassified is small and the dataset could be completed by hand. Also maybe we will need to assess whether or not to unify genres under one representent.
 
 ### Known issues
 
