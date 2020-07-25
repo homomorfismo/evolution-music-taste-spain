@@ -33,10 +33,10 @@ for (i in 1:810){
     mygenres <- top40[j,]$Genre
     mygenres <- stri_split_fixed(mygenres, ', ')[[1]]
     for (g in mygenres){
-      analysis.df[i,][g] <- (analysis.df[i,][g])+1/m
+      analysis.df[i,][g] <- (analysis.df[i,][g])+(m-j)/m
     }
   }
   date = date + as.period(1,'week')
   pb$tick()
 }
-write.csv(analysis.df, file = 'analysis.csv')
+write.csv(analysis.df, file = 'analysis2.csv')

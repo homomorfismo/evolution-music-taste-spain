@@ -11,11 +11,7 @@ The whole project is coded with R. We use the  [rvest](https://rvest.tidyverse.o
 
 ## Classification
 
-I use the [Discogs](www.discogs.com) database and instead of scraping the page we use the [API](https://www.discogs.com/developers/) (among other things, because we tried scraping but server complaint of too many requests). For this we use Python because there is [Python client library](https://github.com/discogs/discogs_client) (which is now deprecated, nonetheless is the one we used).  Multiple genres are assigned to the same song so later we will need a way to consider them separately.
-
-Not all songs are assigned a genre successfully, but the number of songs which are left unclassified is small and the dataset could be completed by hand.
-
-Afterwards 
+We use the [Discogs](www.discogs.com) database and instead of scraping the page we use the [API](https://www.discogs.com/developers/) (among other things, because we tried scraping but server complaint of too many requests). For this we use Python because there is [Python client library](https://github.com/discogs/discogs_client) (which is now deprecated, nonetheless is the one we used).  Multiple genres are assigned to the same song so later we will need a way to consider them separately. Not all songs are assigned a genre successfully, but the number of songs which are left unclassified is small and the dataset could be completed by hand.
 
 ### Known issues
 
@@ -23,7 +19,7 @@ Afterwards
 
 ## Analysis
 
-
+We create a new dataframe where rows correspond to specific top 40 lists referenced by year and week of the year, and the rest of the columns are all the possible genres songs can belong to. We compute the fraction of songs in every playlists that belong to each genre. We will use weights to give more importance to those songs at the top of the list.
 
 ## Plotting
 
