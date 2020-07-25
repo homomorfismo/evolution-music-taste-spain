@@ -23,5 +23,5 @@ We create a new dataframe where rows correspond to specific top 40 lists referen
 
 ## Plotting
 
-Expect to see animated plots using the [gganimate](https://gganimate.com/) package as well as [Plotly](https://plotly.com/r/). 
+I expected I would be using [gganimate](https://gganimate.com/) package as well as [Plotly](https://plotly.com/r/), but both of them gave me headaches. The first because graphics were distorted, and the second because as it tries to make an interactive plot and my dataset is huge it crashed. So as of now, I have exported all graphs as PDFs and later made a GIF out of them using [this online tool](https://ezgif.com/pdf-to-gif). 
 
